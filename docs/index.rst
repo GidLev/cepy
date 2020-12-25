@@ -3,6 +3,9 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image:: docs_header.png
+
+
 Welcome to Cepy's documentation!
 ================================
 
@@ -14,6 +17,7 @@ obtained using the node2vec algorithm fitted on random walk on a brain graph. Th
 framework includes a novel approach to align separately learned embeddings to the same 
 latent space.
 
+
 Example Notebooks are available!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, check out the links below! These are notebooks that go over the general methodology of the CE framework and how it is used in Cepy.
@@ -22,6 +26,7 @@ We recommend going over them in the following order:
 
 
 We recommend you follow the notebooks in order:
+
 - [1. ----](https://github.com/---), a notebook for ---.
 
 - [2. ----](https://github.com/---), a notebook for ---.
