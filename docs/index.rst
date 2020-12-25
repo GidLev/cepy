@@ -21,21 +21,14 @@ Cepy can be installed using pip:
 
   pip install cepy
 
-Example Notebooks are available!
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, check out the links below! These are notebooks that go over the general methodology of the CE framework and how it is used in Cepy.
+Example Notebooks
+=================
+If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, check out the links below. These are notebooks that go over the general methodology of the CE framework and how it is used in Cepy.
 
 We recommend going over them in the following order:
 
 
-
-- `1. ---- <https://github.com/--->`_ , a notebook for ---.
-
-- `1. ---- <https://github.com/--->`_ , a notebook for ---.
-
-- `1. ---- <https://github.com/--->`_ , a notebook for ---.
-
-- `1. ---- <https://github.com/--->`_ , a notebook for ---.
+- `1. ---- <https://github.com/--->`_ , coming soon.
 
 
 
@@ -87,7 +80,7 @@ If you find *cepy* useful for your research, please consider citing the followin
 Acknowledgements
 ================
 
-* The node2vec implementation is modeified from the 'node2vec <https://github.com/eliorc/node2vec>'_ package by Elior Cohen and the 'connectome_embedding <https://github.com/gidonro/Connectome-embeddings'_ code by Gideon Rosenthal.
+* The node2vec implementation is modeified from the `node2vec <https://github.com/eliorc/node2vec>`_ package by Elior Cohen and the `connectome_embedding <https://github.com/gidonro/Connectome-embeddings`_ code by Gideon Rosenthal.
 * Rosenthal, G., Váa, F., Griffa, A., Hagmann, P., Amico, E., Goñi, J., ... & Sporns, O. (2018). Mapping higher-order relations between brain structure and function with embedded vector representations of connectomes. Nature communications, 9(1), 1-12.
 
 
