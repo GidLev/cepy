@@ -8,7 +8,7 @@ obtained using the node2vec algorithm fitted on random walk on a brain graph. Th
  framework includes a novel approach to align separately learned embeddings to the same 
  latent space.
 
-- **Documentation:** https://-------
+- **Documentation:** https://cepy.readthedocs.io/en/latest/
  
 ## Installation
 

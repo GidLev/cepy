@@ -1,8 +1,3 @@
-.. cepy documentation master file, created by
-   sphinx-quickstart on Fri Dec 25 09:49:05 2020.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
-
 .. image:: docs_header.png
 
 
@@ -17,6 +12,14 @@ obtained using the node2vec algorithm fitted on random walk on a brain graph. Th
 framework includes a novel approach to align separately learned embeddings to the same 
 latent space.
 
+Installation
+============
+
+Cepy can be installed using pip:
+
+.. code-block:: shell
+
+  pip install cepy
 
 Example Notebooks are available!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -25,15 +28,14 @@ If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, 
 We recommend going over them in the following order:
 
 
-We recommend you follow the notebooks in order:
 
-- [1. ----](https://github.com/---), a notebook for ---.
+- `1. ---- <https://github.com/--->`_ , a notebook for ---.
 
-- [2. ----](https://github.com/---), a notebook for ---.
+- `1. ---- <https://github.com/--->`_ , a notebook for ---.
 
-- [3. ----](https://github.com/---), a notebook for ---.
+- `1. ---- <https://github.com/--->`_ , a notebook for ---.
 
-- [4. ----](https://github.com/---), a notebook for ---.
+- `1. ---- <https://github.com/--->`_ , a notebook for ---.
 
 
 
@@ -73,12 +75,23 @@ Quick start
 	w_sbject1 = ce_subject1_aligned.weights.get_w_mean(norm = True)
 	w_sbject2 = ce_subject2_aligned.weights.get_w_mean(norm = True)
 	 
-
-
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
+Cite
+================
+
+If you find *cepy* useful for your research, please consider citing the following paper:
+    
+	Levakov, G., Faskowitz, J., Avidan, G. & Sporns, O. (2020). Mapping structure to function 
+	and behavior with individual-level connectome embedding. In preparation
+
+Acknowledgements
+================
+
+* The node2vec implementation is modeified from the 'node2vec <https://github.com/eliorc/node2vec>'_ package by Elior Cohen and the 'connectome_embedding <https://github.com/gidonro/Connectome-embeddings'_ code by Gideon Rosenthal.
+* Rosenthal, G., Váa, F., Griffa, A., Hagmann, P., Amico, E., Goñi, J., ... & Sporns, O. (2018). Mapping higher-order relations between brain structure and function with embedded vector representations of connectomes. Nature communications, 9(1), 1-12.
 
 
 Indices and tables
