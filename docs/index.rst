@@ -39,7 +39,6 @@ We recommend going over them in the following order:
 
 
 
-
 Quick start
 ================================
 
@@ -74,10 +73,8 @@ Quick start
 	# Extract the node vectorized representations (normalized) for subsequent use (prediction, for example) 
 	w_sbject1 = ce_subject1_aligned.weights.get_w_mean(norm = True)
 	w_sbject2 = ce_subject2_aligned.weights.get_w_mean(norm = True)
-	 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+
+- see the full `API  <source/cepy.html>`_
 
 Cite
 ================
@@ -100,3 +97,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
