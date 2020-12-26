@@ -19,7 +19,7 @@ def align(base_ce, target_ce, base_index = 0, target_indices ='all'):
 
     Examples
     --------
-    Load, align and measure the similarity among two connectome embedding:
+    >>> #Load, align and measure the similarity among two connectome embedding:
     >>> import numpy as np
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')

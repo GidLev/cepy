@@ -14,14 +14,72 @@ from cepy.utils import normalize
 import warnings
 
 class CE:
-    FIRST_TRAVEL_KEY = 'first_travel_key'
-    PROBABILITIES_KEY = 'probabilities'
-    NEIGHBORS_KEY = 'neighbors'
-    WEIGHT_KEY = 'weight'
-    NUM_WALKS_KEY = 'num_walks'
-    WALK_LENGTH_KEY = 'walk_length'
-    P_KEY = 'p'
-    Q_KEY = 'q'
+
+    """
+    The main cepy class for buillding and fitting the connectome embedding model
+
+    Parameters
+    ----------
+    dimensions : int, optional
+        Number of embedding dimensions.
+    walk_length : int, optional
+        Number of nodes in each walk.
+    num_walks : int, optional
+        Number of walks initiated from each node.
+    permutations : int, optional
+        Number of independent fitting iteration.
+    p : float, optional
+        Return hyper parameter (see Grover & Leskovec, 2016).
+    q : float, optional
+        In-out parameter (see Grover & Leskovec, 2016).
+    weight_key : str, optional
+        On weighted graphs, this is the key for the weight attribute.
+    workers : int, optional
+        Number of workers for parallel execution.
+    sampling_strategy : dict, optional
+        Node specific sampling strategies, supports setting node specific 'q', 'p',
+        'num_walks' and 'walk_length'. Set to None for homogeneous sampling.
+    verbosity : int, optional
+        Verbosity level from 2 (high) to 0 (low).
+    seed : int, optional
+        Seed for the random number generator. Deterministic results can be obtained if seed is set and workers=1.
+    window : int, optional
+        The maximum number of steps between the current and predicted node within a sequence.
+    min_count : int, optional
+        Ignores all nodes with total frequency lower than this.
+    iter : int, optional
+        Number of iterations (epochs) over all random walk samples.
+    word2vec_kws : dict, optional
+        Additional parameteres for gensim.models.Word2Vec. Notice that window, min_count,
+        iter should be entered as separate parameters (would be ignored).
+    temp_folder : str, optional
+        Path to folder with enough space to hold the memory map of self.d_graph
+        (for big graphs); to be passed joblib.Parallel.temp_folder.
+
+    References
+    ----------
+    .. [1] Grover, A., & Leskovec, J. (2016, August). node2vec: Scalable feature learning for networks.
+           In Proceedings of the 22nd ACM SIGKDD international conference on Knowledge discovery and
+           data mining (pp. 855-864).
+
+    Examples
+    --------
+    >>> #Learn embeddings for a given connectome:
+    >>> import numpy as np
+    >>> import cepy as ce
+    >>> sc_group = ce.get_example('sc_group_matrix')
+    >>> ce_group = ce.CE(permutations=1, seed=1)  # initiate the connectome embedding model
+    >>> ce_group.fit(sc_group)  # fit the model
+    Start training  1  word2vec models on  1 threads.
+    >>> ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
+    0.6134564518636313
+    >>> ce_group.save_model('group_ce_copy.pkl')  # save a model:
+    >>> ce_loaded_copy = ce.load_model('group_ce_copy.pkl')  # load it
+    >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
+    >>> ce_loaded_copy.similarity()[0, 1]
+    0.6134564518636314
+
+    """
 
     def __init__(self, dimensions: int = 30, walk_length: int = 20, num_walks: int = 800,
                  permutations: int = 100, p: float = 1, q: float = 1,
@@ -30,69 +88,18 @@ class CE:
                  min_count: int = 0, iter: int = 1, word2vec_kws: dict = {}):
 
         """
-        Initiates the Node2Vec object, precomputes walking probabilities and generates the walks.
-
-        Parameters
-        ----------
-        dimensions : int, optional
-            Number of embedding dimensions.
-        walk_length : int, optional
-            Number of nodes in each walk.
-        num_walks : int, optional
-            Number of walks initiated from each node.
-        permutations : int, optional
-            Number of independent fitting iteration.
-        p : float, optional
-            Return hyper parameter (see Grover & Leskovec, 2016).
-        q : float, optional
-            In-out parameter (see Grover & Leskovec, 2016).
-        weight_key : str, optional
-            On weighted graphs, this is the key for the weight attribute.
-        workers : int, optional
-            Number of workers for parallel execution.
-        sampling_strategy : dict, optional
-            Node specific sampling strategies, supports setting node specific 'q', 'p',
-            'num_walks' and 'walk_length'. Set to None for homogeneous sampling.
-        verbosity : int, optional
-            Verbosity level from 2 (high) to 0 (low).
-        seed : int, optional
-            Seed for the random number generator. Deterministic results can be obtained if seed is set and workers=1.
-        window : int, optional
-            The maximum number of steps between the current and predicted node within a sequence.
-        min_count : int, optional
-            Ignores all nodes with total frequency lower than this.
-        iter : int, optional
-            Number of iterations (epochs) over all random walk samples.
-        word2vec_kws : dict, optional
-            Additional parameteres for gensim.models.Word2Vec. Notice that window, min_count,
-            iter should be entered as separate parameters (would be ignored).
-        temp_folder : str, optional
-            Path to folder with enough space to hold the memory map of self.d_graph
-            (for big graphs); to be passed joblib.Parallel.temp_folder.
-
-        References
-        ----------
-        .. [1] Grover, A., & Leskovec, J. (2016, August). node2vec: Scalable feature learning for networks.
-               In Proceedings of the 22nd ACM SIGKDD international conference on Knowledge discovery and
-               data mining (pp. 855-864).
-
-        Examples
-        --------
-        Learn embeddings for a given connectome:
-        >>> import numpy as np
-        >>> import cepy as ce
-        >>> sc_group = ce.get_example('sc_group_matrix')
-        >>> ce_group = ce.CE(permutations=1, seed=1)  # initiate the connectome embedding model
-        >>> ce_group.fit(sc_group)  # fit the model
-        Start training  1  word2vec models on  1 threads.
-        >>> ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
-        0.6134564518636313
-        >>> ce_group.save_model('group_ce_copy.pkl')  # save a model:
-        >>> ce_loaded_copy = ce.load_model('group_ce_copy.pkl')  # load it
-        >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
-        >>> ce_loaded_copy.similarity()[0, 1]
-        0.6134564518636314
+        Initiates the connectome embedding object.
         """
+
+        self.FIRST_TRAVEL_KEY = 'first_travel_key'
+        self.PROBABILITIES_KEY = 'probabilities'
+        self.NEIGHBORS_KEY = 'neighbors'
+        self.WEIGHT_KEY = 'weight'
+        self.NUM_WALKS_KEY = 'num_walks'
+        self.WALK_LENGTH_KEY = 'walk_length'
+        self.P_KEY = 'p'
+        self.Q_KEY = 'q'
+
 
         self.dimensions = dimensions
         self.walk_length = walk_length
@@ -352,7 +359,7 @@ class CE:
 
         Examples
         --------
-        Load, align and measure the similarity among two connectome embedding:
+        >>> #Load, align and measure the similarity among two connectome embedding:
         >>> import cepy as ce
         >>> data_path = ce.get_examples_path()
         >>> ce_subject1 = ce.load_model(data_path + '/ce_subject1.pkl.gz')
@@ -387,7 +394,7 @@ def load_model(path):
 
     Examples
     --------
-    Save and Load, and measure the similarity among two connectome embedding:
+    >>> #Save and Load, and measure the similarity among two connectome embedding:
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce_subject1.similarity()
@@ -431,7 +438,7 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
 
     Examples
     --------
-    Load, align and measure the similarity among two connectome embedding:
+    >>> #Load, align and measure the similarity among two connectome embedding:
     >>> import numpy as np
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
@@ -501,7 +508,6 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
 
 
 def get_example(name):
-    import pathlib
     '''
     Returns an existing file example. Can be used for testing/ experimenting.
 
@@ -517,14 +523,14 @@ def get_example(name):
 
     Examples
     --------
-    Load an existing connectome embedding model:
+    >>> #Load an existing connectome embedding model:
     >>> import cepy as ce
     >>> ce_subject1= ce.get_example('ce_subject1')
     >>> w = ce_subject1.weights.get_w_mean()
     >>> w.shape
     (200, 30)
     '''
-
+    import pathlib
     import cepy as ce
     files = ['ce_subject1.pkl.gz', 'ce_subject2.pkl.gz', 'ce_group.pkl.gz', 'sc_subject1_matrix.npz',
              'sc_subject2_matrix.npz', 'sc_group_matrix.npz']

@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="cepy", # Replace with your own username
-    version="0.0.1",
+    version="0.0.2",
     author="Gidon Levakov",
     author_email="gidonlevakov@gmail.com",
     description="Implementation of the connectome embedding workflow.",

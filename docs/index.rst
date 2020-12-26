@@ -80,7 +80,7 @@ If you find *cepy* useful for your research, please consider citing the followin
 Acknowledgements
 ================
 
-* The node2vec implementation is modeified from the `node2vec <https://github.com/eliorc/node2vec>`_ package by Elior Cohen and the `connectome_embedding <https://github.com/gidonro/Connectome-embeddings`_ code by Gideon Rosenthal.
+* The node2vec implementation is modeified from the `node2vec <https://github.com/eliorc/node2vec>`_ package by Elior Cohen and the `connectome_embedding <https://github.com/gidonro/Connectome-embeddings>`_ code by Gideon Rosenthal.
 * Rosenthal, G., Váa, F., Griffa, A., Hagmann, P., Amico, E., Goñi, J., ... & Sporns, O. (2018). Mapping higher-order relations between brain structure and function with embedded vector representations of connectomes. Nature communications, 9(1), 1-12.
 
 
