@@ -542,7 +542,7 @@ def get_example(name):
     if not name in names:
         raise ValueError(name, 'is not recognized.')
 
-    data_path = os.path.dirname(os.path.dirname(ce.__file__)) + '/data'
+    data_path = os.path.dirname(ce.__file__) + '/data'
     path = data_path + '/' + names_to_files[name]
     if not os.path.isfile(path):
         raise Exception('The file', path, ' is missing.')
@@ -559,7 +559,7 @@ def get_examples_path():
     Returns the file examples path.
     '''
     import cepy as ce
-    return os.path.dirname(os.path.dirname(ce.__file__)) + '/data'
+    return os.path.dirname(ce.__file__) + '/data'
 
 
 if __name__ == "__main__":

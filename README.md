@@ -38,8 +38,8 @@ ce_subject1 = ce.get_example('ce_subject1')
 ce_subject2 = ce.get_example('ce_subject2')
 
 # Align the two to the space of the [ce]:
-ce_subject1_aligned = ce.align(ce, ce_subject1)
-ce_subject2_aligned = ce.align(ce, ce_subject2)
+ce_subject1_aligned = ce.align(ce_group, ce_subject1)
+ce_subject2_aligned = ce.align(ce_group, ce_subject2)
 
 # Extract the node vectorized representations (normalized) for subsequent use (prediction, for example) 
 w_sbject1 = ce_subject1_aligned.weights.get_w_mean(norm = True)
