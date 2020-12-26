@@ -2,7 +2,7 @@ import cepy as ce
 
 parms = {'dimensions': 30, 'walk_length': 20, 'num_walks': 800, 'workers': 8,
          'p': 0.1, 'q': 1.6, 'verbosity': 2, 'window': 3, 'min_count': 0,
-         'iter': 1, 'permutations': 10}
+         'iter': 1, 'permutations': 10, 'seed': 2}
 
 sc_subject1 = ce.get_example('sc_subject1_matrix')
 ce_subject1 = ce.CE(**parms)

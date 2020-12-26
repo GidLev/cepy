@@ -126,10 +126,10 @@ class CE:
             self.temp_folder = temp_folder
             self.require = "sharedmem"
 
+        self.seed = seed
         if seed is not None:
             random.seed(seed)
             np.random.seed(seed)
-            self.seed = seed
             self.word2vec_kws['seed'] = seed
 
         if 'workers' not in self.word2vec_kws:
