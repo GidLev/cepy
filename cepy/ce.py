@@ -80,14 +80,6 @@ class CE:
     >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
     >>> ce_loaded_copy.similarity()[0, 1]
     0.6134564518636314
-    >>> # sample random walks
-    >>> sc_group = ce.get_example('sc_group_matrix')
-    >>> ce_group = ce.CE(permutations=1, seed=1, num_walks=10)
-    >>> walks = ce_group.sample_walks(sc_group)
-    UserWarning: num_walks is recommended to be higher 800, but set to 10.
-    warnings.warn('num_walks is recommended to be higher 800, but set to ' + str(num_walks) + '.')
-    >>> print(walks[0])
-    ['37', '35', '54', '0', '12', '6', '4', '14', '24', '35', '37', '35', '54', '23', '69', '9', '62', '34', '62', '7']
     """
 
     def __init__(self, dimensions: int = 30, walk_length: int = 20, num_walks: int = 800,
