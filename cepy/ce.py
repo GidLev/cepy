@@ -49,6 +49,8 @@ class CE:
         Ignores all nodes with total frequency lower than this.
     iter : int, optional
         Number of iterations (epochs) over all random walk samples.
+    save_walks: bool, optional
+        Whether  to save the sampled random walks, if True will result in larger memory consumption.
     word2vec_kws : dict, optional
         Additional parameteres for gensim.models.Word2Vec. Notice that window, min_count,
         iter should be entered as separate parameters (would be ignored).
@@ -92,7 +94,8 @@ class CE:
                  permutations: int = 100, p: float = 1, q: float = 1,
                  weight_key: str = 'weight', workers: int = 1, sampling_strategy: dict = None,
                  verbosity: int = 1, temp_folder: str = None, seed: int = None, window: int = 3,
-                 min_count: int = 0, iter: int = 1, word2vec_kws: dict = {}):
+                 min_count: int = 0, iter: int = 1, save_walks:bool = False,
+                 word2vec_kws: dict = {}):
 
         """
         Initiates the connectome embedding object.
@@ -112,7 +115,7 @@ class CE:
         self.walk_length = walk_length
         if num_walks < 800:
             warnings.warn('num_walks is recommended to be at least 800, but is ' + str(num_walks) + '.')
-            self.num_walks = num_walks
+        self.num_walks = num_walks
         self.p = p
         self.q = q
         self.weight_key = weight_key
@@ -121,7 +124,7 @@ class CE:
         self.d_graph = defaultdict(dict)
         self.word2vec_kws = word2vec_kws
         self.permutations = permutations
-
+        self.save_walks = save_walks
         if sampling_strategy is None:
             self.sampling_strategy = {}
         else:
@@ -291,9 +294,9 @@ class CE:
         
         Returns
         ----------
-        ce_model: CE
-            Fitted connectome embedding object
 
+        walks: list, optional
+            List of lists of nodes
         '''
 
         check_adjacency_matrix(X)
@@ -314,46 +317,9 @@ class CE:
         self._learn_embeddings()
 
         shutil.rmtree(os.path.dirname(self.temp_walks_path))
-        del self.walks
 
-    def sample_walks(self, X: np.array):
-
-        '''
-        Precompute probabilities and generate walks.
-
-        Parameters
-        ----------
-        X : ndarray, shape: (n_nodes, n_nodes)
-            Input adjacency matrix
-
-        Returns
-        ----------
-        walks: list
-            List of lists of nodes
-
-
-        '''
-
-        check_adjacency_matrix(X)
-        self.X = X
-
-        if np.any(self.X.sum(axis=0) == 0):
-            warnings.warn('Notice zero connected nodes are skipped when assigning node names.')
-
-        # remove zero-connected nodes
-        self.nonzero_indices = np.where(self.X.sum(axis=0) > 0)[0]
-        nonzero_adjacency_mat = self.X[self.nonzero_indices, :][:, self.nonzero_indices]
-
-        self.graph = nx.convert_matrix.from_numpy_matrix(nonzero_adjacency_mat)
-
-        self._precompute_probabilities()
-        self._generate_walks()
-
-        walks = self.walks
-        del self.walks
-        return walks
-
-
+        if not self.save_walks:
+            del self.walks
 
 
     class Weights:
