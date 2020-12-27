@@ -150,7 +150,7 @@ class CE:
 
         d_graph = self.d_graph
 
-        nodes_generator = self.graph.nodes() if self.verbosity > 1 \
+        nodes_generator = self.graph.nodes() if self.verbosity <= 1 \
             else tqdm(self.graph.nodes(), desc='Computing transition probabilities')
 
         for source in nodes_generator:
