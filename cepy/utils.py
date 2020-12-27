@@ -1,5 +1,5 @@
 import numpy as np
-
+import warnings
 
 def normalize(X, norm='l2', axis=1):
     """Scale input vectors individually to unit norm (vector length).
@@ -82,3 +82,11 @@ def _handle_zeros_in_scale(scale, copy=True):
             scale = scale.copy()
         scale[scale == 0.0] = 1.0
         return scale
+
+
+def check_adjacency_matrix(X):
+    assert type(X) == np.ndarray, ('Input is expected as a numpy array')
+    assert np.all(X >= 0), ('No negative edges allowed in the adjacency matrix')
+    assert np.all(X == X.T), ('The adjacency matrix is expected to be symmetric')
+    if np.any(X.sum(axis=0) == 0):
+        warnings.warn('The input adjacency matrix contains zero connected nodes.')

@@ -10,7 +10,7 @@ import shutil
 import pickle
 import os
 import gzip
-from cepy.utils import normalize
+from cepy.utils import normalize, check_adjacency_matrix
 import warnings
 
 class CE:
@@ -78,7 +78,14 @@ class CE:
     >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
     >>> ce_loaded_copy.similarity()[0, 1]
     0.6134564518636314
-
+    >>> # sample random walks
+    >>> sc_group = ce.get_example('sc_group_matrix')
+    >>> ce_group = ce.CE(permutations=1, seed=1, num_walks=10)
+    >>> walks = ce_group.sample_walks(sc_group)
+    UserWarning: num_walks is recommended to be higher 800, but set to 10.
+    warnings.warn('num_walks is recommended to be higher 800, but set to ' + str(num_walks) + '.')
+    >>> print(walks[0])
+    ['37', '35', '54', '0', '12', '6', '4', '14', '24', '35', '37', '35', '54', '23', '69', '9', '62', '34', '62', '7']
     """
 
     def __init__(self, dimensions: int = 30, walk_length: int = 20, num_walks: int = 800,
@@ -103,7 +110,9 @@ class CE:
 
         self.dimensions = dimensions
         self.walk_length = walk_length
-        self.num_walks = num_walks
+        if num_walks < 800:
+            warnings.warn('num_walks is recommended to be at least 800, but is ' + str(num_walks) + '.')
+            self.num_walks = num_walks
         self.p = p
         self.q = q
         self.weight_key = weight_key
@@ -287,12 +296,10 @@ class CE:
 
         '''
 
-        assert type(X) == np.ndarray, ('Input is expected as a numpy array')
-        assert np.all(X >= 0), ('No negative edges allowed in the adjacency matrix')
-        assert np.all(X == X.T), ('The adjacency matrix is expected to be symmetric')
+        check_adjacency_matrix(X)
         self.X = X
 
-        # deal with zero-connected components
+        # deal with zero-connected nodes
         self.nonzero_indices = np.where(self.X.sum(axis=0) > 0)[0]
         nonzero_adjacency_mat = self.X[self.nonzero_indices, :][:, self.nonzero_indices]
 
@@ -308,6 +315,46 @@ class CE:
 
         shutil.rmtree(os.path.dirname(self.temp_walks_path))
         del self.walks
+
+    def sample_walks(self, X: np.array):
+
+        '''
+        Precompute probabilities and generate walks.
+
+        Parameters
+        ----------
+        X : ndarray, shape: (n_nodes, n_nodes)
+            Input adjacency matrix
+
+        Returns
+        ----------
+        walks: list
+            List of lists of nodes
+
+
+        '''
+
+        check_adjacency_matrix(X)
+        self.X = X
+
+        if np.any(self.X.sum(axis=0) == 0):
+            warnings.warn('Notice zero connected nodes are skipped when assigning node names.')
+
+        # remove zero-connected nodes
+        self.nonzero_indices = np.where(self.X.sum(axis=0) > 0)[0]
+        nonzero_adjacency_mat = self.X[self.nonzero_indices, :][:, self.nonzero_indices]
+
+        self.graph = nx.convert_matrix.from_numpy_matrix(nonzero_adjacency_mat)
+
+        self._precompute_probabilities()
+        self._generate_walks()
+
+        walks = self.walks
+        del self.walks
+        return walks
+
+
+
 
     class Weights:
         '''
