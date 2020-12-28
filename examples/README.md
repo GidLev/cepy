@@ -13,28 +13,31 @@ neighbors in a random walks instead of sentences.
  and demonstrate its ability for mapping structural connectivity to functional 
  connectivity and to individual differences.**   
 
-Python Jupyter notebooks are available as GitHub **static** pages or as **interactive** binder notebooks.   
+Python Jupyter notebooks are available as [GitHub](https://github.com/) **static** pages or as **interactive** [binder](https://mybinder.readthedocs.io/en/latest/) notebooks.   
 
 
 
-<img src="https://raw.githubusercontent.com/GidLev/cepy/master/examples/ce_workflow_full.png" alt="p and q parameters" width="413" height = "558"/>
+<img src="https://raw.githubusercontent.com/GidLev/cepy/master/examples/ce_workflow_full.png" alt="The connectome embedding framework"/>
 
 
 
-* Random walk sampling (a.i.) - [static](http://link....), [interactive](http://link....) 
-* ii. Sliding, fixed size windows are taken from the random walk sequences. 
-Within each window, the center node is used as the target (black) and the 
-surroundings as context (white).
-* iii. Pairs of context and target nodes  are used as the input and target
- of an artificial neural network with a single hidden layer, i.e. the 
- embedding layer. The input, output and target layers are k dimensional
-  vectors, where k is the number of nodes 
- in the brain graph. The embedding layer is a k' dimensional vector, 
- where k' is set to be k'<k. W and W' are the learned weight matrices 
- that define the transformation between the input and embedding layer,
-  and the embedding and output layer, respectively. The model parameters, 
-  W and W', are iteratively updated using stochastic gradient descent. 
 
+* Random walk sampling (see a.i.) - [static](https://github.com/GidLev/cepy/blob/master/examples/random_walks_generation.ipynb), [interactive](http://link....) 
+
+* Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  [static](https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb), [interactive](http://link....) 
+
+* Aligning CEs within the same individual (independent fitting of the same subject) -  [static](https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb), [interactive](http://link....) 
+
+* Aligning CEs between individuals (across subjects; see b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb), [interactive](http://link....) 
+
+* Learning and aligning CEs of a large cohort (see a,b) -  [static](http://link....) 
+
+* Predicting age from aligned CEs (see c.ii)-  [static](http://link....), [interactive](http://link....) 
 
 
 ## Reference
+
+* Mikolov, T., Sutskever, I., Chen, K., Corrado, G. S., & Dean, J. (2013). Distributed representations of words and phrases and their compositionality. In Advances in neural information processing systems (pp. 3111-3119).
+
+
+* Rosenthal, G., Váša, F., Griffa, A., Hagmann, P., Amico, E., Goñi, J., ... & Sporns, O. (2018). Mapping higher-order relations between brain structure and function with embedded vector representations of connectomes. Nature communications, 9(1), 1-12.
