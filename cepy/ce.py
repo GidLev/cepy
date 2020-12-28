@@ -13,6 +13,9 @@ import gzip
 from cepy.utils import normalize, check_adjacency_matrix
 import warnings
 
+# DOTO: pip package does not install dependencies
+# TO DO: data dir too big
+
 class CE:
 
     """
@@ -141,6 +144,9 @@ class CE:
 
         if 'size' not in self.word2vec_kws:
             self.word2vec_kws['size'] = self.dimensions
+
+        if 'compute_loss' not in self.word2vec_kws:
+            self.word2vec_kws['compute_loss'] = True
 
         # window, min_count, iter should be entered as separate parameters and not to [word2vec_kws] (would be ignored)
         self.word2vec_kws['window'] = window

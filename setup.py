@@ -3,6 +3,10 @@ import setuptools
 with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
+
+
 setuptools.setup(
     name="cepy", # Replace with your own username
     version="0.0.6",
@@ -13,6 +17,7 @@ setuptools.setup(
     long_description_content_type="text/markdown",
     url="https://github.com/gidlev/connectome_embedding",
     packages=setuptools.find_packages(),
+    install_requires = required,
     include_package_data = True,
     classifiers=[
         "Programming Language :: Python :: 3",

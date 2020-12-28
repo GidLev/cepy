@@ -19,3 +19,14 @@
 # ce_group = ce.CE(**parms)
 # ce_group.fit(sc_group)
 # ce_group.save_model('ce_group.pkl.gz')
+
+import pickle
+import os
+import cepy as ce
+import sys
+
+group_ce = ce.get_example('ce_group')
+sys.getsizeof(group_ce)
+
+print('sdf')
+
