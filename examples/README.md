@@ -17,7 +17,7 @@ Python Jupyter notebooks are available as GitHub **static** pages or as **intera
 
 
 
-<img src="https://raw.githubusercontent.com/GidLev/cepy/master/examples/ce_workflow.png" alt="p and q parameters" width="413" height = "558"/>
+<img src="https://raw.githubusercontent.com/GidLev/cepy/master/examples/ce_workflow_full.png" alt="p and q parameters" width="413" height = "558"/>
 
 
 
