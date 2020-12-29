@@ -24,7 +24,7 @@ Python Jupyter notebooks are available as static [**GitHub**](https://github.com
 
 
 * Random walk sampling (see a.i.) - [static](https://github.com/GidLev/cepy/blob/master/examples/random_walks_generation.ipynb),
- [interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Frandom_walks_generation.ipynb) 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Frandom_walks_generation.ipynb) 
 
 * Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  
 [static](https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb), 
