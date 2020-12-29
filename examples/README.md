@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master)
+
 
 # Connectome embedding workflow step-by-step
 
@@ -15,7 +15,7 @@ neighbors in a random walks instead of sentences.
  and demonstrate its ability for mapping structural connectivity to functional 
  connectivity and to individual differences.**   
 
-Python Jupyter notebooks are available as [GitHub](https://github.com/) **static** pages or as **interactive** [binder](https://mybinder.readthedocs.io/en/latest/) notebooks.   
+Python Jupyter notebooks are available as static [**GitHub**](https://github.com/) pages or as interactive Binder ( [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master) ) notebooks.   
 
 
 
@@ -28,17 +28,18 @@ Python Jupyter notebooks are available as [GitHub](https://github.com/) **static
 
 * Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  
 [static](https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb), 
-[interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Flearn_embedding.ipynb) 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Flearn_embedding.ipynb) 
 
-* Aligning CEs within the same individual (independent fitting of the same subject) -  [static](https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb), [interactive](http://link....) 
+* Aligning CEs within the same individual (independent fitting of the same subject) -  [static](https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb), 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fintra_embedding_alignment.ipynb) 
 
 * Aligning CEs between individuals (across subjects; see b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb), 
-[interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fintra_embedding_alignment.ipynb) 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Finter_embedding_alignment.ipynb) 
 
 * Learning and aligning CEs of a large cohort (see a,b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/ce_subjects_pipeline.ipynb) 
 
 * Predicting age from aligned CEs (see c.ii)-  [static](https://github.com/GidLev/cepy/blob/master/examples/ce_prediction.ipynb), 
-[interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fce_prediction.ipynb) 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fce_prediction.ipynb) 
 
 
 ## Reference
