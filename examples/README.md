@@ -1,3 +1,5 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master)
+
 # Connectome embedding workflow step-by-step
 
 
@@ -30,7 +32,7 @@ Python Jupyter notebooks are available as [GitHub](https://github.com/) **static
 
 * Aligning CEs between individuals (across subjects; see b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb), [interactive](http://link....) 
 
-* Learning and aligning CEs of a large cohort (see a,b) -  [static](http://link....) 
+* Learning and aligning CEs of a large cohort (see a,b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/ce_subjects_pipeline.ipynb) 
 
 * Predicting age from aligned CEs (see c.ii)-  [static](http://link....), [interactive](http://link....) 
 
