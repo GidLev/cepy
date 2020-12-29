@@ -19,7 +19,7 @@ import warnings
 class CE:
 
     """
-    The main cepy class for buillding and fitting the connectome embedding model
+    The main Cepy class for buildings and fitting the connectome embedding model
 
     Parameters
     ----------
@@ -32,9 +32,9 @@ class CE:
     permutations : int, optional
         Number of independent fitting iteration.
     p : float, optional
-        Return hyper parameter (see Grover & Leskovec, 2016).
+        Return hyper parameter (see [1]_).
     q : float, optional
-        In-out parameter (see Grover & Leskovec, 2016).
+        In-out parameter (see [1]_).
     weight_key : str, optional
         On weighted graphs, this is the key for the weight attribute.
     workers : int, optional
@@ -325,7 +325,7 @@ class CE:
         Stores the trained weight (W and W' matrices) of all fitting permutations.
 
         Extract the weights with ``get_w_permut(index, norm_flag)`` and ``get_w_mean(norm_flag)``
-        or ``get_w_apos_permut(index, norm_flag)`` and ``get_w_apos_mean(norm_flag)`. If norm_flag
+        or ``get_w_apos_permut(index, norm_flag)`` and ``get_w_apos_mean(norm_flag)``. If norm_flag
         is set to True l2 normalization would apply on each vector before extraction.
 
         '''
