@@ -23,7 +23,7 @@ Cepy can be installed using pip:
 
 Example Notebooks
 =================
-If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, check out the links below. These are notebooks that go over the general methodology of the CE framework and how it is used in Cepy.
+If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, check out the links below. These are notebooks that go over the general methodology of the CE framework and how it is used in Cepy. They are available both as static GitHub pages and interactive Binder notebooks.
 
 We recommend going over them in the following order:
 
@@ -33,19 +33,17 @@ We recommend going over them in the following order:
 .. |Binder 1| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Frandom_walks_generation.ipynb/
 
-* Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  
-`static <https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb>`__, |Binder 2|
+* Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) - `static <https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb>`__, |Binder 2|
 
 .. |Binder 2| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Flearn_embedding.ipynb/
 
-* Aligning CEs within the same individual (independent fitting of the same subject) -
-`static <https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb>`__, |Binder 3|
+* Aligning CEs within the same individual (independent fitting of the same subject) - `static <https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb>`__, |Binder 3|
 
 .. |Binder 3| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fintra_embedding_alignment.ipynb/
 
-* Aligning CEs between individuals (across subjects; see b) -  `static <https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb>`__, |Binder 4|
+* Aligning CEs between individuals (across subjects; see b) - `static <https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb>`__, |Binder 4|
 
 .. |Binder 4| image:: https://mybinder.org/badge_logo.svg
    :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Finter_embedding_alignment.ipynb/
