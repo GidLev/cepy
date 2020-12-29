@@ -15,7 +15,7 @@ neighbors in a random walks instead of sentences.
  and demonstrate its ability for mapping structural connectivity to functional 
  connectivity and to individual differences.**   
 
-Python Jupyter notebooks are available as static [**GitHub**](https://github.com/) pages or as interactive Binder ( [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/GidLev/cepy/master) ) notebooks.   
+Python Jupyter notebooks are available as static [**GitHub**](https://github.com/) pages or as interactive Binder ( ![Binder](https://mybinder.org/badge_logo.svg) ) notebooks.   
 
 
 

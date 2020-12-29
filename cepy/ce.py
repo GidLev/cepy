@@ -370,7 +370,7 @@ class CE:
 
         Examples
         --------
-        >>> #Load, align and measure the similarity among two connectome embedding:
+        >>> #Load a model and save to file:
         >>> import cepy as ce
         >>> data_path = ce.get_examples_path()
         >>> ce_subject1 = ce.load_model(data_path + '/ce_subject1.pkl.gz')
@@ -405,7 +405,7 @@ def load_model(path):
 
     Examples
     --------
-    >>> #Save and Load, and measure the similarity among two connectome embedding:
+    >>> # Save then load a model
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce_subject1.similarity()

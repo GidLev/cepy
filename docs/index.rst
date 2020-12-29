@@ -28,8 +28,34 @@ If you're looking for hands-on examples on connectome embeddings (CE) and Cepy, 
 We recommend going over them in the following order:
 
 
-- `1. ---- <https://github.com/--->`_ , coming soon.
+* Random walk sampling (see a.i.) - `static <https://github.com/GidLev/cepy/blob/master/examples/random_walks_generation.ipynb>`__, |Binder 1|
 
+.. |Binder 1| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Frandom_walks_generation.ipynb/
+
+* Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  
+`static <https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb>`__, |Binder 2|
+
+.. |Binder 2| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Flearn_embedding.ipynb/
+
+* Aligning CEs within the same individual (independent fitting of the same subject) -
+`static <https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb>`__, |Binder 3|
+
+.. |Binder 3| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fintra_embedding_alignment.ipynb/
+
+* Aligning CEs between individuals (across subjects; see b) -  `static <https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb>`__, |Binder 4|
+
+.. |Binder 4| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Finter_embedding_alignment.ipynb/
+
+* Learning and aligning CEs of a large cohort (see a,b) -  `static <https://github.com/GidLev/cepy/blob/master/examples/ce_subjects_pipeline.ipynb>`__ 
+
+* Predicting age from aligned CEs (see c.ii)-  `static <https://github.com/GidLev/cepy/blob/master/examples/ce_prediction.ipynb>`__, |Binder 5|
+
+.. |Binder 5| image:: https://mybinder.org/badge_logo.svg
+   :target: https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fce_prediction.ipynb/
 
 
 Quick start

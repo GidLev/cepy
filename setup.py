@@ -15,7 +15,7 @@ setuptools.setup(
     description="Implementation of the connectome embedding workflow.",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/gidlev/connectome_embedding",
+    url="https://github.com/gidlev/cepy",
     packages=setuptools.find_packages(),
     install_requires = required,
     include_package_data = True,
