@@ -19,22 +19,26 @@ Python Jupyter notebooks are available as [GitHub](https://github.com/) **static
 
 
 
-<img src="https://raw.githubusercontent.com/GidLev/cepy/master/examples/ce_workflow_full.png" alt="The connectome embedding framework"/>
+<img src="https://raw.githubusercontent.com/GidLev/cepy/master/examples/images/ce_workflow_full.png" alt="The connectome embedding framework"/>
 
 
 
+* Random walk sampling (see a.i.) - [static](https://github.com/GidLev/cepy/blob/master/examples/random_walks_generation.ipynb),
+ [interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Frandom_walks_generation.ipynb) 
 
-* Random walk sampling (see a.i.) - [static](https://github.com/GidLev/cepy/blob/master/examples/random_walks_generation.ipynb), [interactive](http://link....) 
-
-* Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  [static](https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb), [interactive](http://link....) 
+* Learning (fitting) connectome embedding (CE; see a.ii, a.iii) and mapping structural to functional connectivity (c.i) -  
+[static](https://github.com/GidLev/cepy/blob/master/examples/learn_embedding.ipynb), 
+[interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Flearn_embedding.ipynb) 
 
 * Aligning CEs within the same individual (independent fitting of the same subject) -  [static](https://github.com/GidLev/cepy/blob/master/examples/intra_embedding_alignment.ipynb), [interactive](http://link....) 
 
-* Aligning CEs between individuals (across subjects; see b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb), [interactive](http://link....) 
+* Aligning CEs between individuals (across subjects; see b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/inter_embedding_alignment.ipynb), 
+[interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fintra_embedding_alignment.ipynb) 
 
 * Learning and aligning CEs of a large cohort (see a,b) -  [static](https://github.com/GidLev/cepy/blob/master/examples/ce_subjects_pipeline.ipynb) 
 
-* Predicting age from aligned CEs (see c.ii)-  [static](http://link....), [interactive](http://link....) 
+* Predicting age from aligned CEs (see c.ii)-  [static](https://github.com/GidLev/cepy/blob/master/examples/ce_prediction.ipynb), 
+[interactive](https://mybinder.org/v2/gh/GidLev/cepy/master?filepath=examples%2Fce_prediction.ipynb) 
 
 
 ## Reference
