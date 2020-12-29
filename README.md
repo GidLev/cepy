@@ -26,7 +26,7 @@ sc_group = ce.get_example('sc_group_matrix')
 ce_group = ce.CE(permutations = 1, seed=1)  
 ce_group.fit(sc_group)
 
-# Extract the cosine similarity matrix among pairwise nodes
+# Extract the cosine similarity matrix among all pairwise nodes
 cosine_sim = ce_group.similarity()
 
 # Save and load the model
@@ -37,11 +37,11 @@ ce_loaded = ce.load_model('group_ce.pkl') # load it
 ce_subject1 = ce.get_example('ce_subject1')
 ce_subject2 = ce.get_example('ce_subject2')
 
-# Align the two to the space of the [ce]:
+# Align the two to the space of the [ce_group]:
 ce_subject1_aligned = ce.align(ce_group, ce_subject1)
 ce_subject2_aligned = ce.align(ce_group, ce_subject2)
 
-# Extract the node vectorized representations (normalized) for subsequent use (prediction, for example) 
+# Extract the node vectorized representations (normalized) for subsequent use - prediction, for example 
 w_sbject1 = ce_subject1_aligned.weights.get_w_mean(norm = True)
 w_sbject2 = ce_subject2_aligned.weights.get_w_mean(norm = True)
  
