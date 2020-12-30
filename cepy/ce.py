@@ -13,8 +13,9 @@ import gzip
 from cepy.utils import normalize, check_adjacency_matrix
 import warnings
 
-# DOTO: pip package does not install dependencies
-# TO DO: data dir too big
+# TODO: Replace pickle with an efficient, secure option
+# TODO: Option to add nodes names to the CE class
+# TODO: implement nearest/n-nearest nodes query
 
 class CE:
 
