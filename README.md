@@ -48,11 +48,13 @@ w_sbject2 = ce_subject2_aligned.weights.get_w_mean(norm = True)
 
 ```
 
+A set example interactive Jupyter notebooks are also available [here](https://github.com/GidLev/cepy/tree/master/examples).
+
 ### Citing
 If you find *cepy* useful for your research, please consider citing the following paper:
     
-    Levakov, G., Faskowitz, J., Avidan, G. & Sporns, O. (2020). Mapping structure to function
-     and behavior with individual-level connectome embedding. In preparation
+    Levakov, G., Faskowitz, J., Avidan, G. & Sporns, O. (2021). Mapping structure to function
+     and behavior with individual-level connectome embedding. bioRxiv. doi: https://doi.org/10.1101/2021.01.13.426513 
 
 ### Reference
 * The node2vec implementation is modeified from the [node2vec](https://github.com/eliorc/node2vec) package by Elior Cohen and the [connectome_embedding](https://github.com/gidonro/Connectome-embeddings) code by Gideon Rosenthal.
