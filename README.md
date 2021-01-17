@@ -48,7 +48,7 @@ w_sbject2 = ce_subject2_aligned.weights.get_w_mean(norm = True)
 
 ```
 
-A set example interactive Jupyter notebooks are also available [here](https://github.com/GidLev/cepy/tree/master/examples).
+A set of example interactive Jupyter notebooks are also available [here](https://github.com/GidLev/cepy/tree/master/examples).
 
 ### Citing
 If you find *cepy* useful for your research, please consider citing the following paper:
