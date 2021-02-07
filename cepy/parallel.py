@@ -105,6 +105,14 @@ def parallel_learn_embeddings(walks_file, word2vec_kws, nonzero_indices, num_nod
     w[nonzero_indices, :] = model.wv.vectors[sorting_indices, :]
     w_apos[:, nonzero_indices] = model.trainables.syn1neg.T[:, sorting_indices]
 
+    # set random values for the zero connected nodes
+    zero_indices = np.ones((num_nodes))
+    zero_indices[nonzero_indices] = 0
+    w[zero_indices, :] = np.random.uniform(low=-0.5, high=0.5,  \
+        size=(int(nonzero_indices.sum()), word2vec_kws['size'])) / word2vec_kws['size']
+    w_apos[:, zero_indices] = np.random.uniform(low=-0.5, high=0.5,  \
+        size=(word2vec_kws['size'], int(nonzero_indices.sum()))) / word2vec_kws['size']
+
     training_loss = model.get_latest_training_loss()
 
     if verbosity > 1:

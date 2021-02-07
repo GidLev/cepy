@@ -56,6 +56,11 @@ If you find *cepy* useful for your research, please consider citing the followin
     Levakov, G., Faskowitz, J., Avidan, G. & Sporns, O. (2021). Mapping structure to function
      and behavior with individual-level connectome embedding. bioRxiv. doi: https://doi.org/10.1101/2021.01.13.426513 
 
+### Contributing
+Cepy is an open-source software project, and we welcome contributions from anyone. 
+We suggest [raising](https://github.com/GidLev/cepy/issues) an issue prior to 
+working on a new feature. 
+
 ### Reference
 * The node2vec implementation is modeified from the [node2vec](https://github.com/eliorc/node2vec) package by Elior Cohen and the [connectome_embedding](https://github.com/gidonro/Connectome-embeddings) code by Gideon Rosenthal.
 * Rosenthal, G., Váša, F., Griffa, A., Hagmann, P., Amico, E., Goñi, J., ... & Sporns, O. (2018). Mapping higher-order relations between brain structure and function with embedded vector representations of connectomes. Nature communications, 9(1), 1-12.
