@@ -78,13 +78,13 @@ class CE:
     >>> ce_group = ce.CE(permutations=1, seed=1)  # initiate the connectome embedding model
     >>> ce_group.fit(sc_group)  # fit the model
     Start training  1  word2vec models on  1 threads.
-    >>> ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
-    0.6134564518636313
+    >>> '%.8f' % ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
+    '0.61345645'
     >>> ce_group.save_model('group_ce_copy.json')  # save a model:
     >>> ce_loaded_copy = ce.load_model('group_ce_copy.json')  # load it
     >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
-    >>> ce_loaded_copy.similarity()[0, 1]
-    0.6134564518636314
+    >>> '%.8f' % ce_loaded_copy.similarity()[0, 1]
+    '0.61345645'
     """
 
     def __init__(self, dimensions: int = 30, walk_length: int = 20, num_walks: int = 800,
@@ -457,13 +457,13 @@ def load_model(path):
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce_subject1.similarity()
-    >>> sim[2,5]
-    0.1603671564010687
+    >>> '%.8f' % sim[2,5]
+    '0.16036716'
     >>> ce_subject1.save_model('ce_subject1_copy.json')
     >>> ce_subject1_copy = ce.load_model('ce_subject1_copy.json')
     >>> sim = ce_subject1_copy.similarity()
-    >>> sim[2,5]
-    0.1603671564010687
+    >>> '%.8f' % sim[2,5]
+    '0.16036716'
     '''
     if path[-8:] == '.json.gz':
         with gzip.open(path, 'rt', encoding='UTF-8') as f:
@@ -522,11 +522,11 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce.similarity(ce_subject1, ce_subject1, method='cosine_similarity')
-    >>> sim[3,2]
-    0.8262521992737962
+    >>> '%.8f' % sim[3,2]
+    '0.82625220'
     >>> sim = ce_subject1.similarity(ce_subject1, method='cosine_similarity') # equivalent
-    >>> sim[3,2]
-    0.8262521992737966
+    >>> '%.8f' % sim[3,2]
+    '0.82625220'
     >>> ce_subject2 = ce.get_example('ce_subject2')
     >>> ce_group = ce.get_example('ce_group')
     >>> # aligned both subject to the group consensus space
@@ -535,8 +535,8 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> # and measure the similarity among all corresponding nodes across subjects
     >>> sim = ce.similarity(ce_subject1, ce_subject2, method='cosine_similarity')
     >>> diagonal_indices = np.diag_indices(sim.shape[0])
-    >>> sim[diagonal_indices].mean()
-    0.5742402512131674
+    >>> '%.8f' % sim[diagonal_indices].mean()
+    '0.57424025'
     '''
     if Y == None:
         Y = X
