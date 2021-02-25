@@ -12,6 +12,7 @@ import os
 import gzip
 from cepy.utils import normalize, check_adjacency_matrix
 import warnings
+import json
 
 # TODO: Replace pickle with an efficient, secure option
 # TODO: Option to add nodes names to the CE class
@@ -79,8 +80,8 @@ class CE:
     Start training  1  word2vec models on  1 threads.
     >>> ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
     0.6134564518636313
-    >>> ce_group.save_model('group_ce_copy.pkl')  # save a model:
-    >>> ce_loaded_copy = ce.load_model('group_ce_copy.pkl')  # load it
+    >>> ce_group.save_model('group_ce_copy.json')  # save a model:
+    >>> ce_loaded_copy = ce.load_model('group_ce_copy.json')  # load it
     >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
     >>> ce_loaded_copy.similarity()[0, 1]
     0.6134564518636314
@@ -96,7 +97,8 @@ class CE:
         """
         Initiates the connectome embedding object.
         """
-
+        self.input_args = dict(locals())
+        del self.input_args['self']
         self.FIRST_TRAVEL_KEY = 'first_travel_key'
         self.PROBABILITIES_KEY = 'probabilities'
         self.NEIGHBORS_KEY = 'neighbors'
@@ -358,6 +360,38 @@ class CE:
     def similarity(self, *args, **kwargs):
         return similarity(self, *args, **kwargs)
 
+    def pickle_model(self, path, compress=False):
+        '''
+        Save a model to a pikle object
+
+        Parameters
+        ----------
+        path : str
+            Path to the file.
+        compress: bool
+            Whether to compress the file with gzip
+
+        Examples
+        --------
+        >>> #Load a model and save to file:
+        >>> import cepy as ce
+        >>> data_path = ce.get_examples_path()
+        >>> ce_subject1 = ce.load_model(data_path + '/ce_subject1.json.gz')
+        >>> ce_subject1.pickle_model('saved_model.pkl')
+        '''
+        if path[-7:] == '.pkl.gz':
+            compress = True
+        if compress:
+            if path[-7:] != '.pkl.gz':
+                path = path + '.pkl.gz'
+            with gzip.open(path, 'wb') as f:
+                pickle.dump(self, f, 3)
+        else:
+            if path[-4:] != '.pkl':
+                path = path + '.pkl'
+            with open(path, 'wb') as output:
+                pickle.dump(self, output, 3)
+
     def save_model(self, path, compress=False):
         '''
         Save a model to a pikle object
@@ -374,22 +408,35 @@ class CE:
         >>> #Load a model and save to file:
         >>> import cepy as ce
         >>> data_path = ce.get_examples_path()
-        >>> ce_subject1 = ce.load_model(data_path + '/ce_subject1.pkl.gz')
-        >>> ce_subject1.save_model('saved_model.pkl')
+        >>> ce_subject1 = ce.load_model(data_path + '/ce_subject1.json')
+        >>> ce_subject1.save_model('saved_model.json')
         '''
-        if path[-7:] == '.pkl.gz':
+        if not hasattr(self, 'input_args'):
+            warnings.warn('It seems the model was create with an older version '
+                          'of Cepy, please use [pickle_model] instead.')
+            return None
+        model_data = {'input_args': self.input_args}
+        if hasattr(self, 'weights'):
+            model_data['X'] = self.X.tolist()
+            model_data['model_weights'] = {'w': [x.tolist() for x in self.weights.w],
+                                           'w_apos':  [x.tolist() for x in self.weights.w_apos]}
+            model_data['training_losses'] = self.training_losses
+
+        if hasattr(self, 'walks'):
+            model_data['walks'] = self.walks
+
+        if path[-8:] == '.json.gz':
             compress = True
         if compress:
-            if path[-7:] != '.pkl.gz':
-                path = path + '.pkl.gz'
-            with gzip.open(path, 'wb') as f:
-                pickle.dump(self, f, 3)
+            if path[-8:] != '.json.gz':
+                path = path + '.json.gz'
+            with gzip.open(path, 'wt', encoding="UTF-8") as output:
+                json.dump(model_data, output)
         else:
-            if path[-4:] != '.pkl':
-                path = path + '.pkl'
-            with open(path, 'wb') as output:
-                pickle.dump(self, output, 3)
-
+            if path[-5:] != '.json':
+                path = path + '.json'
+            with open(path, 'w') as output:
+                json.dump(model_data, output)
 
 def load_model(path):
     '''
@@ -411,20 +458,40 @@ def load_model(path):
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce_subject1.similarity()
     >>> sim[2,5]
-    0.1438583470288893
-    >>> ce_subject1.save_model('ce_subject1_copy.pkl')
-    >>> ce_subject1_copy = ce.load_model('ce_subject1_copy.pkl')
+    0.1603671564010687
+    >>> ce_subject1.save_model('ce_subject1_copy.json')
+    >>> ce_subject1_copy = ce.load_model('ce_subject1_copy.json')
     >>> sim = ce_subject1_copy.similarity()
     >>> sim[2,5]
-    0.1438583470288893
+    0.1603671564010687
     '''
-    if path[-7:] == '.pkl.gz':
+    if path[-8:] == '.json.gz':
+        with gzip.open(path, 'rt', encoding='UTF-8') as f:
+            loaded_model_dict = json.load(f)
+        loaded_model = model_from_dict(loaded_model_dict)
+    elif path[-5:] == '.json':
+        with open(path, 'r') as f:
+            loaded_model_dict = json.load(f)
+        loaded_model = model_from_dict(loaded_model_dict)
+    elif path[-7:] == '.pkl.gz':
         with gzip.open(path, 'rb') as f:
             loaded_model = pickle.load(f)
-    else:
+    elif path[-4:] == '.pkl':
         with open(path, 'rb') as f:
             loaded_model = pickle.load(f)
     return loaded_model
+
+def model_from_dict(m_dict):
+    model = CE(**m_dict['input_args'])
+    if 'model_weights' in m_dict:
+        model.weights = model.Weights()
+        model.weights.w = [np.array(x) for x in m_dict['model_weights']['w']]
+        model.weights.w_apos = [np.array(x) for x in m_dict['model_weights']['w_apos']]
+        model.training_losses = m_dict['training_losses']
+        model.X = np.array(m_dict['X'])
+    if 'walks' in m_dict:
+        model.walks = m_dict['walks']
+    return model
 
 
 def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=None):
@@ -456,10 +523,10 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce.similarity(ce_subject1, ce_subject1, method='cosine_similarity')
     >>> sim[3,2]
-    0.8230196615715807
+    0.8262521992737962
     >>> sim = ce_subject1.similarity(ce_subject1, method='cosine_similarity') # equivalent
     >>> sim[3,2]
-    0.8230196615715808
+    0.8262521992737966
     >>> ce_subject2 = ce.get_example('ce_subject2')
     >>> ce_group = ce.get_example('ce_group')
     >>> # aligned both subject to the group consensus space
@@ -469,7 +536,7 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> sim = ce.similarity(ce_subject1, ce_subject2, method='cosine_similarity')
     >>> diagonal_indices = np.diag_indices(sim.shape[0])
     >>> sim[diagonal_indices].mean()
-    0.048276127600268885
+    0.5742402512131674
     '''
     if Y == None:
         Y = X
@@ -544,7 +611,7 @@ def get_example(name):
     '''
     import pathlib
     import cepy as ce
-    files = ['ce_subject1.pkl.gz', 'ce_subject2.pkl.gz', 'ce_group.pkl.gz', 'sc_subject1_matrix.npz',
+    files = ['ce_subject1.json.gz', 'ce_subject2.json.gz', 'ce_group.json.gz', 'sc_subject1_matrix.npz',
              'sc_subject2_matrix.npz', 'sc_group_matrix.npz']
     names = [file[:file.find('.')] for file in files]
     file_types = [''.join(pathlib.Path(file).suffixes) for file in files]
@@ -561,7 +628,7 @@ def get_example(name):
 
     if names_to_file_types[name] == '.npz':
         res = np.load(path)['x']
-    elif names_to_file_types[name] in ['.pkl', '.pkl.gz']:
+    elif names_to_file_types[name] in ['.json', '.json.gz']:
         res = load_model(path)
     return res
 

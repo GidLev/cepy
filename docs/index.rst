@@ -76,8 +76,8 @@ Quick start
 	cosine_sim = ce_group.similarity()
 
 	# Save and load the model
-	ce_group.save_model('group_ce.pkl') 
-	ce_loaded = ce.load_model('group_ce.pkl') # load it
+	ce_group.save_model('group_ce.json')
+	ce_loaded = ce.load_model('group_ce.json') # load it
 
 	# Load two existing CE models  
 	ce_subject1 = ce.get_example('ce_subject1')
