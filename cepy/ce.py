@@ -145,8 +145,10 @@ class CE:
         if 'workers' not in self.word2vec_kws:
             self.word2vec_kws['workers'] = self.workers
 
-        if 'size' not in self.word2vec_kws:
-            self.word2vec_kws['size'] = self.dimensions
+        if 'vector_size' not in self.word2vec_kws:
+            self.word2vec_kws['vector_size'] = self.dimensions
+        if 'size' in self.word2vec_kws:
+            self.word2vec_kws.pop('size', None)
 
         if 'compute_loss' not in self.word2vec_kws:
             self.word2vec_kws['compute_loss'] = True
