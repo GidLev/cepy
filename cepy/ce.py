@@ -156,7 +156,7 @@ class CE:
         # window, min_count, iter should be entered as separate parameters and not to [word2vec_kws] (would be ignored)
         self.word2vec_kws['window'] = window
         self.word2vec_kws['min_count'] = min_count
-        self.word2vec_kws['iter'] = iter
+        self.word2vec_kws['epochs'] = iter
 
     def _precompute_probabilities(self):
         """
