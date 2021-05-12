@@ -6,7 +6,7 @@ Embedding of brain graph or connectome embedding (CE) involves finding a compact
 representation of nodes that captures their higher-order topological attributes. CE are 
 obtained using the node2vec algorithm fitted on random walk on a brain graph. The current
  framework includes a novel approach to align separately learned embeddings to the same 
- latent space. Cepy is tested for Python 3.6, 3.7 and 3.8.
+ latent space. Cepy is tested on Python 3.6, 3.7 and 3.8.
 
 - **Documentation:** https://cepy.readthedocs.io/en/latest/
  
