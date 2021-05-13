@@ -26,15 +26,15 @@ def align(base_ce, target_ce, base_index = 0, target_indices ='all'):
     >>> ce_subject2 = ce.get_example('ce_subject2')
     >>> sim = ce.similarity(ce_subject1, ce_subject2, method='cosine_similarity')
     >>> diagonal_indices = np.diag_indices(sim.shape[0])
-    >>> '%.8f' % sim[diagonal_indices].mean()  # measure the similarity among all corresponding nodes across subjects
-    '0.57424025'
+    >>> '%.2f' % sim[diagonal_indices].mean()  # measure the similarity among all corresponding nodes across subjects
+    '0.57'
     >>> # now we repeat the process but first align the two:
     >>> ce_group = ce.get_example('ce_group')
     >>> ce_subject1_aligned = ce.align(ce_group, ce_subject1)
     >>> ce_subject2_aligned = ce.align(ce_group, ce_subject2)
     >>> sim = ce.similarity(ce_subject1_aligned,ce_subject2_aligned,method='cosine_similarity')
-    >>> '%.8f' % sim[diagonal_indices].mean()
-    '0.79352460'
+    >>> '%.2f' % sim[diagonal_indices].mean()
+    '0.79'
     '''
 
     aligned_target_ce = copy.deepcopy(target_ce)
