@@ -13,6 +13,7 @@ import gzip
 from cepy.utils import normalize, check_adjacency_matrix
 import warnings
 import json
+import pkg_resources
 
 # TODO: Replace pickle with an efficient, secure option
 # TODO: Option to add nodes names to the CE class
@@ -78,13 +79,13 @@ class CE:
     >>> ce_group = ce.CE(permutations=1, seed=1)  # initiate the connectome embedding model
     >>> ce_group.fit(sc_group)  # fit the model
     Start training  1  word2vec models on  1 threads.
-    >>> '%.8f' % ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
-    '0.61345645'
+    >>> '%.2f' % ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
+    '0.62'
     >>> ce_group.save_model('group_ce_copy.json')  # save a model:
     >>> ce_loaded_copy = ce.load_model('group_ce_copy.json')  # load it
     >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
-    >>> '%.8f' % ce_loaded_copy.similarity()[0, 1]
-    '0.61345645'
+    >>> '%.2f' % ce_loaded_copy.similarity()[0, 1]
+    '0.62'
     """
 
     def __init__(self, dimensions: int = 30, walk_length: int = 20, num_walks: int = 800,
@@ -145,10 +146,14 @@ class CE:
         if 'workers' not in self.word2vec_kws:
             self.word2vec_kws['workers'] = self.workers
 
-        if 'vector_size' not in self.word2vec_kws:
+        # Check gensim version, after v4.0.0: size->vector_size and iter-> epochs
+        gensim_version = pkg_resources.get_distribution("gensim").version
+        if gensim_version >= '4.0.0':
             self.word2vec_kws['vector_size'] = self.dimensions
-        if 'size' in self.word2vec_kws:
-            self.word2vec_kws.pop('size', None)
+            self.word2vec_kws['epochs'] = iter
+        else:
+            self.word2vec_kws['size'] = self.dimensions
+            self.word2vec_kws['iter'] = iter
 
         if 'compute_loss' not in self.word2vec_kws:
             self.word2vec_kws['compute_loss'] = True
@@ -156,7 +161,7 @@ class CE:
         # window, min_count, iter should be entered as separate parameters and not to [word2vec_kws] (would be ignored)
         self.word2vec_kws['window'] = window
         self.word2vec_kws['min_count'] = min_count
-        self.word2vec_kws['epochs'] = iter
+
 
     def _precompute_probabilities(self):
         """
@@ -459,13 +464,13 @@ def load_model(path):
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce_subject1.similarity()
-    >>> '%.8f' % sim[2,5]
-    '0.16036716'
+    >>> '%.2f' % sim[2,5]
+    '0.16'
     >>> ce_subject1.save_model('ce_subject1_copy.json')
     >>> ce_subject1_copy = ce.load_model('ce_subject1_copy.json')
     >>> sim = ce_subject1_copy.similarity()
-    >>> '%.8f' % sim[2,5]
-    '0.16036716'
+    >>> '%.2f' % sim[2,5]
+    '0.16'
     '''
     if path[-8:] == '.json.gz':
         with gzip.open(path, 'rt', encoding='UTF-8') as f:
@@ -524,11 +529,11 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> import cepy as ce
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce.similarity(ce_subject1, ce_subject1, method='cosine_similarity')
-    >>> '%.8f' % sim[3,2]
-    '0.82625220'
+    >>> '%.2f' % sim[3,2]
+    '0.83'
     >>> sim = ce_subject1.similarity(ce_subject1, method='cosine_similarity') # equivalent
-    >>> '%.8f' % sim[3,2]
-    '0.82625220'
+    >>> '%.2f' % sim[3,2]
+    '0.83'
     >>> ce_subject2 = ce.get_example('ce_subject2')
     >>> ce_group = ce.get_example('ce_group')
     >>> # aligned both subject to the group consensus space
@@ -537,8 +542,8 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> # and measure the similarity among all corresponding nodes across subjects
     >>> sim = ce.similarity(ce_subject1, ce_subject2, method='cosine_similarity')
     >>> diagonal_indices = np.diag_indices(sim.shape[0])
-    >>> '%.8f' % sim[diagonal_indices].mean()
-    '0.57424025'
+    >>> '%.2f' % sim[diagonal_indices].mean()
+    '0.57'
     '''
     if Y == None:
         Y = X

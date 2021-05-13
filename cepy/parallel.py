@@ -3,6 +3,7 @@ import numpy as np
 from tqdm import tqdm
 import gensim
 import time
+import pkg_resources
 
 def parallel_generate_walks(d_graph: dict, global_walk_length: int, num_walks: int, cpu_num: int,
                             sampling_strategy: dict = None, num_walks_key: str = None, walk_length_key: str = None,
@@ -94,25 +95,32 @@ def parallel_learn_embeddings(walks_file, word2vec_kws, nonzero_indices, num_nod
     model = gensim.models.Word2Vec(corpus_file=walks_file, hashfxn = get_hash, **word2vec_kws)
 
     # The word2vec algorithm does not preserve the nodes order, so we should sort it
-    nodes_unordered = np.array([int(node) for node in model.wv.index2word])
+    gensim_version = pkg_resources.get_distribution("gensim").version
+    if gensim_version > '4.0.0':
+        nodes_unordered = np.array([int(node) for node in model.wv.index_to_key])
+    else:
+        nodes_unordered = np.array([int(node) for node in model.wv.index2word])
     sorting_indices = np.argsort(nodes_unordered)
 
-    # initiate W and W'
-    w = np.empty((num_nodes, word2vec_kws['size']))
-    w_apos = np.empty((word2vec_kws['size'], num_nodes))
+    # initiate  W and W'
+    embed_dims = word2vec_kws['vector_size'] if 'vector_size' in word2vec_kws else word2vec_kws['size']
+    w = np.empty((num_nodes, embed_dims))
+    w_apos = np.empty((embed_dims, num_nodes))
 
     # get the trained matrices for the non-zero connected nodes
     w[nonzero_indices, :] = model.wv.vectors[sorting_indices, :]
-    w_apos[:, nonzero_indices] = model.trainables.syn1neg.T[:, sorting_indices]
-
+    if pkg_resources.get_distribution("gensim").version >= '4.0.0':
+        w_apos[:, nonzero_indices] = model.syn1neg.T[:, sorting_indices]
+    else:
+        w_apos[:, nonzero_indices] = model.trainables.syn1neg.T[:, sorting_indices]
     # set random values for the zero connected nodes
     if len(nonzero_indices) < num_nodes:
         zero_indices = np.ones((num_nodes), dtype = bool)
         zero_indices[nonzero_indices] = 0
         w[zero_indices, :] = np.random.uniform(low=-0.5, high=0.5,  \
-            size=(int(zero_indices.sum()), word2vec_kws['size'])) / word2vec_kws['size']
+            size=(int(zero_indices.sum()), embed_dims)) / embed_dims
         w_apos[:, zero_indices] = np.random.uniform(low=-0.5, high=0.5,  \
-            size=(word2vec_kws['size'], int(zero_indices.sum()))) / word2vec_kws['size']
+            size=(embed_dims, int(zero_indices.sum()))) / embed_dims
 
     training_loss = model.get_latest_training_loss()
 

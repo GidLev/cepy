@@ -5,10 +5,12 @@ name: Python package
 
 on:
   push:
-    branches: [ master, dev ]
+    branches: 
+      - '**'
   pull_request:
-    branches: [ master, dev ]
-
+    branches:
+      - '**'
+      
 jobs:
   build:
 
