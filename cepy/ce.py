@@ -530,10 +530,10 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
     >>> ce_subject1 = ce.get_example('ce_subject1')
     >>> sim = ce.similarity(ce_subject1, ce_subject1, method='cosine_similarity')
     >>> '%.2f' % sim[3,2]
-    '0.82'
+    '0.83'
     >>> sim = ce_subject1.similarity(ce_subject1, method='cosine_similarity') # equivalent
     >>> '%.2f' % sim[3,2]
-    '0.82'
+    '0.83'
     >>> ce_subject2 = ce.get_example('ce_subject2')
     >>> ce_group = ce.get_example('ce_group')
     >>> # aligned both subject to the group consensus space
