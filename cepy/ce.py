@@ -80,12 +80,12 @@ class CE:
     >>> ce_group.fit(sc_group)  # fit the model
     Start training  1  word2vec models on  1 threads.
     >>> '%.2f' % ce_group.similarity()[0, 1]  # Extract the cosine similarity between node 0 and 1
-    '0.61'
+    '0.62'
     >>> ce_group.save_model('group_ce_copy.json')  # save a model:
     >>> ce_loaded_copy = ce.load_model('group_ce_copy.json')  # load it
     >>> # Extract the same cosine similarity again, this should be identical apart from minor numerical difference
     >>> '%.2f' % ce_loaded_copy.similarity()[0, 1]
-    '0.61'
+    '0.62'
     """
 
     def __init__(self, dimensions: int = 30, walk_length: int = 20, num_walks: int = 800,
