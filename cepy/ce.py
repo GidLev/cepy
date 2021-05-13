@@ -13,6 +13,7 @@ import gzip
 from cepy.utils import normalize, check_adjacency_matrix
 import warnings
 import json
+import pkg_resources
 
 # TODO: Replace pickle with an efficient, secure option
 # TODO: Option to add nodes names to the CE class
@@ -145,10 +146,14 @@ class CE:
         if 'workers' not in self.word2vec_kws:
             self.word2vec_kws['workers'] = self.workers
 
-        if 'vector_size' not in self.word2vec_kws:
+        # Check gensim version, after v4.0.0: size->vector_size and iter-> epochs
+        gensim_version = pkg_resources.get_distribution("gensim").version
+        if gensim_version >= '4.0.0':
             self.word2vec_kws['vector_size'] = self.dimensions
-        if 'size' in self.word2vec_kws:
-            self.word2vec_kws.pop('size', None)
+            self.word2vec_kws['epochs'] = iter
+        else:
+            self.word2vec_kws['size'] = self.dimensions
+            self.word2vec_kws['iter'] = iter
 
         if 'compute_loss' not in self.word2vec_kws:
             self.word2vec_kws['compute_loss'] = True
@@ -156,7 +161,7 @@ class CE:
         # window, min_count, iter should be entered as separate parameters and not to [word2vec_kws] (would be ignored)
         self.word2vec_kws['window'] = window
         self.word2vec_kws['min_count'] = min_count
-        self.word2vec_kws['epochs'] = iter
+
 
     def _precompute_probabilities(self):
         """
