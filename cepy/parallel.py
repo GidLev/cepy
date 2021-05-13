@@ -102,7 +102,7 @@ def parallel_learn_embeddings(walks_file, word2vec_kws, nonzero_indices, num_nod
         nodes_unordered = np.array([int(node) for node in model.wv.index2word])
     sorting_indices = np.argsort(nodes_unordered)
 
-    # initiate W and W'
+    # initiate  W and W'
     embed_dims = word2vec_kws['vector_size'] if 'vector_size' in word2vec_kws else word2vec_kws['size']
     w = np.empty((num_nodes, embed_dims))
     w_apos = np.empty((embed_dims, num_nodes))
