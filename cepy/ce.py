@@ -15,7 +15,6 @@ import warnings
 import json
 import pkg_resources
 
-# TODO: Replace pickle with an efficient, secure option
 # TODO: Option to add nodes names to the CE class
 # TODO: implement nearest/n-nearest nodes query
 
@@ -63,7 +62,8 @@ class CE:
     temp_folder : str, optional
         Path to folder with enough space to hold the memory map of self.d_graph
         (for big graphs); to be passed joblib.Parallel.temp_folder.
-
+    pregenerated_walks: list, optional
+        List of lists of node names, the walks to train the word2vec model
     References
     ----------
     .. [1] Grover, A., & Leskovec, J. (2016, August). node2vec: Scalable feature learning for networks.
@@ -93,7 +93,7 @@ class CE:
                  weight_key: str = 'weight', workers: int = 1, sampling_strategy: dict = None,
                  verbosity: int = 1, temp_folder: str = None, seed: int = None, window: int = 3,
                  min_count: int = 0, iter: int = 1, save_walks:bool = False,
-                 word2vec_kws: dict = {}):
+                 word2vec_kws: dict = {}, pregenerated_walks: list = None):
 
         """
         Initiates the connectome embedding object.
@@ -124,6 +124,7 @@ class CE:
         self.word2vec_kws = word2vec_kws
         self.permutations = permutations
         self.save_walks = save_walks
+        self.pregenerated_walks = pregenerated_walks
         if sampling_strategy is None:
             self.sampling_strategy = {}
         else:
@@ -297,8 +298,8 @@ class CE:
 
         Parameters
         ----------
-        X : ndarray, shape: (n_nodes, n_nodes)
-            Input adjacency matrix
+        X : ndarray
+            Input adjacency matrix, shape: (n_nodes, n_nodes)
         
         Returns
         ----------
@@ -313,11 +314,14 @@ class CE:
         # deal with zero-connected nodes
         self.nonzero_indices = np.where(self.X.sum(axis=0) > 0)[0]
         nonzero_adjacency_mat = self.X[self.nonzero_indices, :][:, self.nonzero_indices]
-
-        self.graph = nx.convert_matrix.from_numpy_matrix(nonzero_adjacency_mat)
-
-        self._precompute_probabilities()
-        self._generate_walks()
+        if self.pregenerated_walks:
+            if len(self.nonzero_indices) < len(self.X):
+                warnings.warn('Zero connected nodes are found, make sure [pregenerated_walks] are created after removing them')
+            self.walks = self.pregenerated_walks
+        else:
+            self.graph = nx.convert_matrix.from_numpy_matrix(nonzero_adjacency_mat)
+            self._precompute_probabilities()
+            self._generate_walks()
 
         self.temp_walks_path = tempfile.mkdtemp() + '/walks.txt'
         with open(self.temp_walks_path, 'w') as walks_file:
@@ -580,7 +584,7 @@ def similarity(X, Y=None, permut_indices=None, method='cosine_similarity', norm=
                 similarity_measure = array_x * array_y
             elif method == 'l1':
                 similarity_measure = np.abs(array_x - array_y)
-            elif method == 'l1':
+            elif method == 'l2':
                 similarity_measure = (array_x - array_y) ** 2
         else:
             raise Exception('Methods ', method, 'is not supported.')
