@@ -42,7 +42,7 @@ def align(base_ce, target_ce, base_index = 0, target_indices ='all'):
     transformation_to_base = np.linalg.pinv(base_ce.weights.w_apos[base_index]).T
 
     if target_indices == 'all':
-        target_indices = np.arange(len(base_ce.weights.w))
+        target_indices = np.arange(len(target_ce.weights.w))
     elif type(target_indices) == int:
         target_indices = [target_indices]
     if not isinstance(target_indices, Iterable):
