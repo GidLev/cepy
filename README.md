@@ -53,8 +53,8 @@ A set of example interactive Jupyter notebooks are also available [here](https:/
 ### Citing
 If you find *cepy* useful for your research, please consider citing the following paper:
     
-    Levakov, G., Faskowitz, J., Avidan, G. & Sporns, O. (2021). Mapping structure to function
-     and behavior with individual-level connectome embedding. bioRxiv. doi: https://doi.org/10.1101/2021.01.13.426513 
+    Levakov, G., Faskowitz, J., Avidan, G., & Sporns, O. (2021). Mapping individual differences across brain network structure 
+     to function and behavior with connectome embedding. Neuroimage, 242, 118469. 
 
 ### Contributing
 Cepy is an open-source software project, and we welcome contributions from anyone. 
