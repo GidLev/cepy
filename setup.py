@@ -9,7 +9,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name="cepy", # Replace with your own username
-    version="0.1.2",
+    version="1.0.0",
     author="Gidon Levakov",
     author_email="gidonlevakov@gmail.com",
     description="Implementation of the connectome embedding workflow.",
