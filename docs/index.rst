@@ -98,8 +98,7 @@ Cite
 
 If you find *cepy* useful for your research, please consider citing the following paper:
     
-	Levakov, G., Faskowitz, J., Avidan, G. & Sporns, O. (2020). Mapping structure to function 
-	and behavior with individual-level connectome embedding. In preparation
+	Levakov, G., Faskowitz, J., Avidan, G., & Sporns, O. (2021). Mapping individual differences across brain network 		structure to function and behavior with connectome embedding. Neuroimage, 242, 118469. 
 
 Acknowledgements
 ================
